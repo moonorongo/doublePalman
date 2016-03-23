@@ -1,0 +1,45 @@
+Uhmmm....
+Bien, si decidistes leer este archivo es porque tienes algun
+interes en registrarte...
+
+Ok, pasare a explicarte brevemente los tipos de registracion con
+los que contas:
+
+1.- Registracion minima:
+    El costo de esta registracion es de 8 (ocho) pesos. A cambio
+de esto recibis a vuelta de correo la version completa de Double
+Pakman!, o sea los 100 niveles, las musicas, etc.
+
+2.- Registracion FULL CODE:
+    Mhmmm, bueno, esta sale un poco mas... Sale MUCHO mas, debido
+a que aqui yo te mando, ademas del juego completo, los FUENTES
+del programa, todas las rutinas que desarrolle para el juego, asi
+como tambien el editor de laberintos, el programa para volcar los
+archivos graficos al formato de los sprites y una explicacion
+sobre como desarrolle el pacman y las dificultades que fui
+encontrando a medida que desarrolle el juego. Pero todo no es
+maravilloso en esta vida, no, no. Para acceder a esta
+registracion deberas mandarme la suma de $100, a si, si.
+
+ACLARACION:
+            Si no vivis en Bahia Blanca, es obvio que vas a tener
+que enviar un giro, asi que a todo las sumas enunciadas
+anteriormente vas a tener que agregar $4 (cuatro pesos) de gastos
+de envio.
+
+Para registrarte solo tenes que enviar la suma antes mencionada
+a:
+   Mauro Sebastian Cifuentes
+   Berutti 590
+   (8000) Bahia Blanca
+   Pcia de Buenos Aires
+   Argentina.
+
+y detallar que tipo de registracion queres:
+
+[ ] Registracion Simple
+[ ] Registracion Full
+
+Ok?
+
+

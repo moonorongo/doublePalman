@@ -1,0 +1,195 @@
+Bien,
+aqui tenemos una innovacion sobre el clasico PACMAN:
+
+DOUBLE PAkMAN!!
+
+un juego realizado en PASCAL 7.0 con inclusion de rutinas en assembler
+(para la musica y los Sprites)
+Bueno,  a no ser que vivas en otro planeta, creo que todos sabemos que
+es un pacman, no?
+
+Pacman:  Clasico  juego  de  laberinto en que un circulo con un sector
+que   se  abre  y  se cierra (ojitos incluidos) trata de comerse todos
+los  puntitos (cocos para la jerga gallega) a la vez que es perseguido
+por  unos fantasmitas que tratan de manducarselo. Comiendose alguna de
+las pastillas que titilan tenemos un determinado tiempo (que varia con
+los niveles) para comernos los monstruos.
+
+Requerimientos:
+                IBM, Clon, o algo parecido a alguna PC.
+                MS-DOS 5.0, procesador 286 o superior y nada mas.
+                Se puede correr tambien sobre Windows.
+                No aseguro que funcione bajo OS/2.
+
+Incompatibilidades:
+                    Este juego no requiere de ningun tipo
+especial de memoria, es mas, no funciona si hay algun manejador
+de memoria (EMM386, QEMM, o algun otro), por lo que yo
+recomendaria es, al momento de Bootear, apretar la tecla F5, con
+la que se omitiran el CONFIG.SYS y el AUTOEXEC.BAT. El juego no
+usa el mouse (como pensas manejar un pacman con el mouse???) y
+si pensas que poniendole un cache al disco rigido mejoras el
+funcionamiento: ERROR!!!!! El programa usa su propia cache, por
+lo que no es recomendable instalar ningun cache de disco rigido
+(SMARTDRV o SCPLUS) ya que lo mas probable es que ralentize todo.
+
+
+Consejo:
+         Hacete un diskette de booteo, con solo los archivos
+basicos, no cargas nada y el juego anda pipi cucu. Asi la
+vida sera alegre y la felicidad volvera como poroto a la chaucha.
+
+
+Innovaciones:
+
+        Bueno,  como  su  titulo  lo  indica, en DOUBLE PAkMAN podemos
+jugar  de a dos a la vez en un mismo laberinto, controlando un jugador
+el  clasico  pacman  amarillo  y  el segundo jugador un pacman celeste
+oscuro tirando a azulado (Claro, no??).
+       Aqui tenemos dos modalidades de juego:
+
+        1) 2 Players Cooperative
+
+        2) 2 Players Competitive
+
+        En  el  modo cooperativo, ambos pacmans juegan y ninguno puede
+"da¤ar" a su compa¤ero.
+Como es eso???
+
+Claro,  porque  en el modo competitivo si un jugador come una pastilla
+podes manducarte tambien a tu compa¤ero de juego. Interesante, no??
+Demas  esta  decir  que  en  esta modalidad es practicamente imposible
+terminar el juego, y no esta aconsejada para personas temperamentales,
+sino para personas alegres, dicharacheras y con sentido del humor.
+
+Dejando  de lado los dos jugadores, ademas tenemos la inclusion de una
+nueva  pastillita. Si, en algunos niveles el pacman va a una velocidad
+exasperadamente  lenta. Eso no es un error de programacion sino que la
+velocidad del pacman en ese nivel es baja.
+Como no todo esta perdido, decidi incluir en esos niveles una pastilla
+que   te  aumenta  la velocidad hasta un cierto punto, vale decir, por
+mas  que te comas ochocientas mil pastillas no vas a ir a la velocidad
+de  la  luz  sino que el pacman, llegado a un tope, no acelera mas. Lo
+interesante  de  esto  es  que jugando de a dos podes planear maldades
+como  comerte  la  pastilla que le corresponderia a tu compa¤ero y ver
+como los montruitos lo hacen pasar a mejor vida. . . Conmovedor, no??
+
+Vidas:
+       Este  fuckin'  juego  paga  cada  10  niveles una vida y cada 6
+monstruos que te comas de 1600.
+Como es eso?? te preguntaras. . .
+Asi:
+     Cuando comes una pastilla te podes comer los monstruos
+     Cuando comes un monstruo te da 200, despues 400, despues 800
+     y finalmente 1600
+     Seis veces que logres comerte mostruos de 1600 te dara una vida
+
+OK??
+
+Y finalmente estan los pasadizos en los que no podes retornar. Esto te
+lo va a indicar una flecha del otro lado del pasaje.
+Hay  niveles  (los ultimos) que si te metes en un pasaje sin salida no
+tenes  mas  remedio  que  dejarte  perder, asi que para eso inclui dos
+teclas para quitarte una vida. Estas son:
+
+        1 = Pierde una vida Player 1
+        2 = Pierde una vida Player 2
+
+Bueno, lo unico que quedaria es resumir las teclas, y estas son:
+
+            Player 1                        Player 2
+
+             S                               fl arr.
+        Z    X    C                 fl izq.  fl ab.  fl der.
+
+Se  entiende, no?? no estoy de humor para explicarlo, son las 12:00 de
+la noche y me caigo de sue¤o.
+
+þ CQAA.-
+
+1.- Por que en modo cooperativo no hay un puntaje comun?
+
+R: Bien, llegado a este punto (noviembre '95) no tengo ni !#!$@!@
+gana de seguir programando... a lo mejor en una version futura...
+
+2.- Por que el SETSOUND me marca una velocidad de mixado de
+10000, siendo que yo tengo un poderoso PENTIUM 90?
+
+R: Las rutinas para pasar musica no son del todo perfectas... por
+encima de los 10 Khz te despelotan todo lo que se refiere a los
+calculos de ajuste de la velocidad (para que el juego funcione a
+igual velocidad en todas las maquinas). Prefiero sacrificar
+calidad del sonido antes que se me enquilombe todo, ok?
+
+3.- Por que los pacmans en el juego no son punkitos como en la
+presentacion? Estarian mas copados asi.
+
+R: Explico: Este juego lo hice pensando para que funcione bien en
+una fuckin' 286 de 12 Mhz. Para eso tuve que sacrificar el tama¤o
+de los sprites y asi el procesador pierde menos tiempo moviendo
+bytes y se logra una velocidad fluida y un juego mas adictivo.
+Para agregar el pelito punkito tendria que tener unos graficos de
+mayor tama¤o, con lo que el juego dejaria mucho que desear en una
+286.
+
+4.- Quien es el ganso que todavia tiene 286????
+
+R: Yo.
+
+5.- Por que no se puede continuar?
+
+R: referirse a respuesta a pregunta 1.
+
+6.- Es muy dificil!!!
+
+R: I'm Sorry...
+
+7.- Es una porqueria...
+
+R: Tirame la goma...
+
+8.- Por que el juego de caracteres (Font) que usas para
+visualizar el puntaje, vidas, Hall of Fame, etc, es tan horrible?
+
+R: Uso el font del Bios. Echale la culpa a los fabricantes de
+hardware por hacer las letras tan horrorosas. . . (o pasame la
+posta para hacer tipografias copadas).
+
+9.- Por que solo 5 posiciones en la tabla de records???
+
+R: Para que mas?? No me compliques la existencia.
+
+10.- Soy un Poor User de una F'ing XT. No podrias hacer que
+funcione en XT???
+
+R: Estas Crazy, Macaya???
+
+11.- Que debo hacer para registrarme?
+
+R: Leer REGISTER.TXT.
+
+12.- Soy un usuario de Amiga 500. No podrias hacer una version
+para Amiga?
+
+R: JUA JUA JUA JUA JUA!!!! Us  el "emulador" PC, JUA JUAJUA!!!
+
+13.- Este juego es una porqueria. El MORTAL KOMBAT esta 10 veces
+mejor. . .
+
+R: Vete al infierno, trat  de hacerlo mejor. . . H#$@!@$# y tu
+madre tambien...
+
+
+
+
+
+
+Este es todo el manual de instrucciones.
+
+
+
+
+
+
+
+
