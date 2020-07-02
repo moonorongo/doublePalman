@@ -1,0 +1,1 @@
+dosbox pacman.exe -c loadfix -exit
