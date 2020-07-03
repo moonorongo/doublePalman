@@ -5,17 +5,26 @@
 AppName=Double Pacman
 AppVersion=1
 WizardStyle=modern
-DefaultDirName={autopf}\My Program
+DefaultDirName=C:\Double Pacman
 DefaultGroupName=Double Pacman
 ;UninstallDisplayIcon={app}\MyProg.exe
 Compression=lzma2
 SolidCompression=yes
 OutputDir=userdocs:Inno Setup Examples Output
+AllowNoIcons=true
+SetupIconFile=installer.ico
 
 [Files]
-;Source: "MyProg.exe"; DestDir: "{app}"
-;Source: "MyProg.chm"; DestDir: "{app}"
-;Source: "Readme.txt"; DestDir: "{app}"; Flags: isreadme
+Source: "game\*"; DestDir: "{app}"
+Source: "game\game\*"; DestDir: "{app}\game"
+;Source: "game\Documentation\*"; DestDir: "{app}\Documentation"
+;Source: "game\Video Codec\*"; DestDir: "{app}\Video Codec"
+
 
 [Icons]
-;Name: "{group}\My Program"; Filename: "{app}\MyProg.exe"
+Name: "{group}\Double Pacman"; Filename: "{app}\game\dpacman.bat"; WorkingDir: "{app}\game"; IconFilename: "{app}\game\dpacman.ico"
+Name: "{userdesktop}\Double Pacman"; Filename: "{app}\game\dpacman.bat"; WorkingDir: "{app}\game"; IconFilename: "{app}\game\dpacman.ico"
+Name: "{group}\Uninstall Double Pacman"; Filename: "{uninstallexe}"
+
+[Messages]
+SelectDirLabel3=Setup will install [name] into the following folder.%nPlease,avoid to install in "Program Files" o "Program Files (x86)" folder because this game needs write permissions to update hiscore table.
