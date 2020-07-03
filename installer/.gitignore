@@ -1,2 +1,9 @@
 game/*.*
 !game/readme.txt
+
+game/Documentation
+game/Documentation/*
+game/Video Codec
+game/Video Codec/*
+game/game
+game/game/*
