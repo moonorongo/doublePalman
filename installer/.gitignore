@@ -1,2 +1,2 @@
-game\*
-~game\readme.txt
+game/*.*
+!game/readme.txt
