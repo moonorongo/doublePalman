@@ -1,0 +1,1 @@
+d:\bin\DOSBox-0.74-3\DOSBox.exe pacman.exe -c loadfix -noautoexec

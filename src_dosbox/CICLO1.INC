@@ -165,7 +165,8 @@ var
    x2,y2 : byte;
 begin;
 posxy (pac,x2,y2);
-IF presionada[31] THEN
+{ S -> W }
+IF presionada[17] THEN
             begin;
                 if no_arriba(pac,pantalla,x2,y2) then
                 begin;
@@ -184,7 +185,8 @@ IF presionada[31] THEN
                 end;
             end;
 
-IF presionada[45] THEN
+
+IF presionada[31] THEN
             begin;
                if no_abajo(pac,pantalla,x2,y2) then
                   begin;
@@ -203,7 +205,8 @@ IF presionada[45] THEN
                   end;
             end;
 
-IF presionada[44] THEN
+{ Z -> A }
+IF presionada[30] THEN
             begin;
                   if no_izquierda(pac,pantalla,x2,y2) then
                      begin;
@@ -222,7 +225,8 @@ IF presionada[44] THEN
                      end;
             end;
 
-IF presionada[46] THEN
+{ C -> D }
+IF presionada[32] THEN
             begin;
                   if no_derecha(pac,pantalla,x2,y2) then
                      begin;
