@@ -17,8 +17,8 @@ SetupIconFile=installer.ico
 [Files]
 Source: "game\*"; DestDir: "{app}"
 Source: "game\game\*"; DestDir: "{app}\game"
-;Source: "game\Documentation\*"; DestDir: "{app}\Documentation"
-;Source: "game\Video Codec\*"; DestDir: "{app}\Video Codec"
+Source: "game\Documentation\*"; DestDir: "{app}\Documentation"
+Source: "game\Video Codec\*"; DestDir: "{app}\Video Codec"
 
 
 [Icons]
