@@ -214,10 +214,12 @@ var
 arch : file of hof;
 
 begin;
+{
 assign (arch,'pacman.rec');
 rewrite (arch);
 write (arch,p);
 close (arch);
+}
 end;
 
 
@@ -376,7 +378,6 @@ repeat
                    bandera := true
              end;
           setcol (t,aux[t].r,aux[t].g,aux[t].b);
-          {for rr := 1 to retraso_fade do;}
 
       end;
 until bandera = false;
@@ -417,7 +418,6 @@ repeat
                    bandera := true
              end;
           setcol (t,dac[t].r,dac[t].g,dac[t].b);
-          {for rr := 1 to retraso_fade do;}
       end;
 
              if vol > 10 then
@@ -461,7 +461,6 @@ repeat
                    bandera := true
              end;
           setcol (t,dac[t].r,dac[t].g,dac[t].b);
-          {for rr := 1 to retraso_fade do;}
 
       end;
 until bandera = false;
@@ -480,19 +479,6 @@ var
    contador : longint;
    hasta : byte;
 begin;
-{clrscr;
-contador := 0;
-
-if mem[0:$46c] > 240 then repeat until mem[0:$46c] = 1;
-hasta := mem[0:$46c];
-
-repeat
-inc (contador);
-until mem[0:$46c] >= hasta + 10;
-
-getvel := contador div 85000;
-}
-
 getvel := 0;
 end;
 
@@ -503,7 +489,7 @@ end;
 
 
 
-PROCEDURE Scoreme;  {Show current score and number of remaining lives}
+PROCEDURE Scoreme;
 BEGIN
   TextATTr := 64 + White;
   GOTOXY(10,1);
@@ -512,7 +498,7 @@ END;
 
 
 
-PROCEDURE Scoreme2;  {Show current score and number of remaining lives}
+PROCEDURE Scoreme2;
 BEGIN
   TextATTr := 64 + White;
   GOTOXY(30,1);
@@ -537,19 +523,6 @@ end;
 
 {$i monster1.inc }
 {$i CICLO1.INC}
-
-
-{
-procedure start_Music;
-begin;
-      mix := 10000;
-      dev := rs.dispositivo;
-      md := 'interferon.mod';
-      pro := 0;
-      loop :=4;
-end;
-}
-
 
 
 procedure load_screen (nombre : string; var inscreen : graphicscreen);
@@ -593,7 +566,6 @@ procedure players2;
 BEGIN;
 
 salida := false;
-{ VARIABLE DE PUNTAJE }
 puntaje := 0;
 puntaje2 := 0;
 
@@ -618,14 +590,14 @@ repeat
 port[$21]:=0;
 cargar_nivel (nivel, dificultad,pantalla,titulo);
 
-{ DIBUJA EL FUCKING LABERINTO (Y QUE SINO???) }
+
 dibuja_laberinto (pantalla,cantidad);
 muestra_vidas;
 gotoxy (2,25);
 write ('Level ');
 write (nivel);
-write (' - ');
-write (titulo);
+{write (' - ');
+write (titulo);}
 
     md := 'a.mod';
     pro := 0;
@@ -641,11 +613,6 @@ port[$21]:=$5c;
 
 { COMIENZO DE LAS VIDAS }
        REPEAT
-
-{             inicializa_variables2;
-             scoreme;
-             scoreme2;
-             muestra_vidas;}
              delay (700);
 
 { CICLO DEL JUEGO }
@@ -722,45 +689,6 @@ open_records (records);
 
 
 
-if not(salida) then
-begin;
-      if ((puntaje > records[5].puntaje) or
-          (puntaje2 > records[5].puntaje)) then
-                    begin
-                       loadcol ('HISCORE.COL',presen_col);
-                       load_screen ('HISCORE.VGA',act);
-                       fadein (presen_col);
-
-                       if puntaje > records[5].puntaje then
-                          begin;
-                          gotoxy (1,1);
-                          textAttr := 255;
-                          gotoxy (8,18);
-                          write ('Player 1, enter your name:');
-                          records[5].puntaje := puntaje;
-                          records[5].nombre := get_name (15,20);
-                          sort_records (records);
-                          Update_records (records);
-                          end;
-
-
-                       if puntaje2 > records[5].puntaje then
-                          begin;
-                          gotoxy (1,1);
-                          textAttr := 255;
-                          gotoxy (8,18);
-                          write ('Player 2, enter your name:');
-                          records[5].puntaje := puntaje2;
-                          records[5].nombre := get_name (15,20);
-                          sort_records (records);
-                          Update_records (records);
-                          end;
-
-                       fade_to_black (presen_col);
-                    end;
-end;
-
-
                   if nivel <> 101 then
                               begin;
                                     loadcol ('gameo.col',col2);
@@ -799,7 +727,7 @@ end;
 
 
 
-{ comienzo de la fucking ACCION!!!!!!!!!!!! }
+
 begin;
 clrscr;
 open_records(records);
@@ -810,13 +738,7 @@ open_records(records);
 
 
 salida := false;
-{assign (arc_sonido,'pacman.snd');
-reset (arc_sonido);
-read (arc_sonido,rs);
-close (arc_sonido);
-}
 
-{ RESERVA MEMORIA PARA VARIABLE PANTALLA }
 getmem(Pantalla,sizeof(panta));
 
 { LEE LOS SPRITES DEL DISCO }
@@ -847,23 +769,9 @@ conta_sonido := 0;
 sonido_pastilla := false;
 setgraph;
 DirectVideo := False;
-{      setzeros;
-      fillchar (act,64000,0);
-
-
-      loadcol ('MCPRES.COL',presen_col);
-      load_screen ('MCPRES.VGA',act);
-      fadein (presen_col);
-
-      delay (3000);
-
-      fade_to_black (presen_col);
- }
 
       loadcol ('dpac2.col',presen_col);
       load_screen ('salida.vga',act);
-
- {     start_music;      }
 
       fadein (presen_col);
 
@@ -876,54 +784,8 @@ repeat
 WaitRetrace;
 inc (conta_intercambio);
 
-if presionada[57] then conta_intercambio := 600000;
 
 for retraso := 1 to pausa do;
-
-
-if conta_intercambio >= 600000 then
-                     begin;
-                           W_pantalla := not(W_pantalla);
-                           conta_intercambio := 0;
-                           if W_pantalla then
-                                         begin;
-                                               fade_to_black2 (presen_col);
-                                               loadcol ('HOF.col',presen_col);
-                                               setzeros;
-                                               load_screen ('HOF.vga',act);
-                                               open_records (records);
-
-                                               TextATTr := 255;
-
-                                               gotoxy (8,12); write (records[1].nombre);
-                                               gotoxy (28,12); write (records[1].puntaje : 7);
-
-                                               gotoxy (8,14); write (records[2].nombre);
-                                               gotoxy (28,14); write (records[2].puntaje : 7);
-
-                                               gotoxy (8,16); write (records[3].nombre);
-                                               gotoxy (28,16); write (records[3].puntaje : 7);
-
-                                               gotoxy (8,18); write (records[4].nombre);
-                                               gotoxy (28,18); write (records[4].puntaje : 7);
-
-                                               gotoxy (8,20); write (records[5].nombre);
-                                               gotoxy (28,20); write (records[5].puntaje : 7);
-
-                                               fadein (presen_col);
-
-                                         end
-                                        else
-                                         begin;
-                                               fade_to_black2 (presen_col);
-                                               loadcol ('dpac2.col',presen_col);
-                                               setzeros;
-                                               load_screen ('salida.vga',act);
-                                               fadein (presen_col);
-                                         end;
-                     end;
-
-
 
 
 if presionada [59] then begin;
@@ -958,23 +820,6 @@ if presionada [61] then begin;
 
 
 
-if presionada[63] then
-                      begin;
-                              Fade_to_black2 (presen_col);
-                              loadcol ('credits.col',col2);
-                              load_screen ('credits.vga',act);
-                              fadein (col2);
-                              repeat until keypressed;
-                              fade_to_Black2 (col2);
-
-                              loadcol ('dpac2.col',presen_col);
-                              load_screen ('salida.vga',act);
-                              fadein (presen_col);
-                              conta_intercambio := 0;
-                              W_pantalla := false;
-                      end;
-
-
 until presionada[1];
 Fade_to_black (presen_col);
 
@@ -991,63 +836,3 @@ end.
 
 
 
-
-
-
-ESPERO QUE ANDES LA REPUTA QUE TE PARIO. . .
-
-La concha de tu madre. . . .
-
-
-
-
-
-
-
-                        |       |
-                        |       |
-                        |       |
-                     \  |       |  /
-                      \ |       | /
-                       \         /
-                        \       /
-                         \     /
-                          \   /
-                           \ /
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Si bajastes hasta aca es porque te la comes doblada. . .
-
-
-
-
-maricon. . .
