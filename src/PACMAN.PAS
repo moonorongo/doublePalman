@@ -634,7 +634,7 @@ write (titulo);
     pro := 0;
     loop :=4; {4 Hace que el MOD se repita constantemente}
     modsetup ( stat, dev, mix, pro, loop, md);
-    modvolume (255,255,255,255);    { M ximo Vol£men }
+    modvolume (255,255,255,255);    { MÂ ximo VolÂ£men }
 
 port[$21]:=$5c;
              inicializa_variables2;
@@ -1000,68 +1000,3 @@ textmode (3);
 writeln ('Ahhh!!! DOS Again!...');
 
 end.
-
-
-
-
-
-
-
-
-ESPERO QUE ANDES LA REPUTA QUE TE PARIO. . .
-
-La concha de tu madre. . . .
-
-
-
-
-
-
-
-                        |       |
-                        |       |
-                        |       |
-                     \  |       |  /
-                      \ |       | /
-                       \         /
-                        \       /
-                         \     /
-                          \   /
-                           \ /
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Si bajastes hasta aca es porque te la comes doblada. . .
-
-
-
-
-maricon. . .
