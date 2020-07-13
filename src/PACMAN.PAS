@@ -621,7 +621,7 @@ repeat
 port[$21]:=0;
 cargar_nivel (nivel, dificultad,pantalla,titulo);
 
-{ DIBUJA EL FUCKING LABERINTO (Y QUE SINO???) }
+{ DIBUJA EL LABERINTO }
 dibuja_laberinto (pantalla,cantidad);
 muestra_vidas;
 gotoxy (2,25);
@@ -805,7 +805,7 @@ end;
 
 
 
-{ comienzo de la fucking ACCION!!!!!!!!!!!! }
+{ comienzo de la ACCION }
 begin;
 clrscr;
 open_records(records);
@@ -847,8 +847,7 @@ if paramstr(1) = 'test' then
 
 
 writeln ('HMMM... Las rutinas de deteccion de velocidad nunca fueron mi fuerte...');
-writeln ('aparte estoy podrido de programar...');
-writeln ('Mete un valor de retraso para tu maquina');
+writeln ('Ingresa un valor de retraso para tu maquina');
 writeln ('Por Ejemplo:');
 writeln ('            10 para un K6II de 350');
 writeln ('            menos para una maquina mas lenta');
