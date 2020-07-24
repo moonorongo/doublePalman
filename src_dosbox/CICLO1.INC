@@ -1636,8 +1636,6 @@ end;
 
       s := not(s);
 
-      for retraso := 1 to pausa do;
-      delay (retraso_pii); {MODIFICACION DEL 9-8-99 - para que ande en un PII}
 
 until (presionada[1] or ((vidas = 0) and (vidas2 = 0)) or (cantidad = 0));
 end;

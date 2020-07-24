@@ -39,6 +39,8 @@ type
                               end;
 
 var
+   ticks : longint;
+   ticks1Ms : longint;
    titulo : string;
    cm1,conta_inmunidad_1 : word;
    cm2,conta_inmunidad_2 : word;
@@ -48,8 +50,7 @@ var
 
    nivini,
    ret_fino_p,
-   ret_fino_m,
-   retraso_pii : byte;
+   ret_fino_m : byte;
 
    records : hof;
 
@@ -169,13 +170,119 @@ var
    conta_puntaje,
    conta_sonido : byte;
 
-   retraso_fade : word;
+   retraso_fade,
+   ms_retrace,
+   ms_beep : word;
 
 
-procedure WaitRetrace;          { Wait for vertical retrace }
+
+
+function getTicksIn60Ms : longint;
+var
+  Hour,Min,Sec,HSec : word;
+  prev : word;
+  counter : longint;
+  i : integer;
+
 begin
-  repeat { Nothing } until (Port[$03da] and 8) <> 0;
+	i := 0;
+	counter := 0;
+
+	repeat
+	  GetTime(Hour,Min,Sec,HSec);
+
+	  if i = 0 then
+	  begin
+		if HSec = prev then i := 1;
+	  end
+	  else
+	  begin
+		if HSec = prev then counter := counter + 1 else i := 2;
+	  end;
+
+	  prev := HSec;
+	until i = 2;
+
+    getTicksIn60Ms := counter;
 end;
+
+
+
+
+function getAverageTicks(count : word) : longint;
+var
+   accumulator : longint;
+   i : word;
+
+begin
+  accumulator := 0;
+  for i := 1 to count do accumulator := accumulator + getTicksIn60Ms;
+
+  getAverageTicks := accumulator div count;
+
+end;
+
+
+
+
+procedure wait_ms(ms : word);
+var
+   c2, i : longint;
+   ticks : longint;
+   dummy : longint;
+   prev_dummy : longint;
+
+
+   Hour,Min,Sec,HSec : word;
+begin
+    dummy := 0;
+    c2 := 0;
+    prev_dummy := 0;
+    ticks := ms * ticks1Ms;
+
+    for i := 0 to ticks do
+    begin
+
+      GetTime(Hour,Min,Sec,HSec);
+      if dummy = prev_dummy then c2 := c2 + 1 else dummy := 2;
+      prev_dummy := dummy;
+    end;
+end;
+
+
+
+procedure wait_a_little_bit;
+begin
+    wait_ms(ms_beep);
+end;
+
+
+
+procedure WaitRetrace;
+begin
+  wait_ms(ms_retrace);
+end;
+
+
+
+procedure get_delay_params;
+Var
+	UserFile : Text;
+	FileName, line : String;
+        status : integer;
+
+Begin
+	Assign(UserFile, 'pacman.ini');
+	Reset(UserFile);
+
+	Readln(UserFile,line);
+	val(line, ms_beep, status);
+
+	Readln(UserFile,line);
+	val(line, ms_retrace, status);
+
+	Close(UserFile);
+End;
 
 
 function get_name (x,y : byte) : string;
@@ -257,9 +364,9 @@ for t := 3 to 7 do
 begin;
       f := t * 100;
       repeat
-            inc (f,3);
-            sound(f);
-            delay (1);
+        inc (f,3);
+        sound(f);
+	wait_a_little_bit;
       until f > (t + 3) * 100;
 end;
 
@@ -299,12 +406,12 @@ begin;
       for f := 600  downto 300 do
       begin;
           sound (f);
-          delay (1);
+	  wait_a_little_bit;
       end;
       for f := 100 to 300 do
       begin;
           sound (f * 3);
-          delay (1);
+	  wait_a_little_bit;
       end;
 nosound;
 end;
@@ -378,8 +485,10 @@ repeat
                    bandera := true
              end;
           setcol (t,aux[t].r,aux[t].g,aux[t].b);
-
       end;
+	  
+      waitRetrace;
+	  
 until bandera = false;
 
 
@@ -425,6 +534,7 @@ repeat
                       dec(vol,5);
                 end;
 
+      waitRetrace;
 until bandera = false;
 
 end;  {procedure}
@@ -463,6 +573,8 @@ repeat
           setcol (t,dac[t].r,dac[t].g,dac[t].b);
 
       end;
+
+      waitRetrace;
 until bandera = false;
 end;  {procedure}
 
@@ -473,14 +585,6 @@ end;  {procedure}
 
 
 
-
-function getvel : longint;
-var
-   contador : longint;
-   hasta : byte;
-begin;
-getvel := 0;
-end;
 
 
 
@@ -613,14 +717,14 @@ port[$21]:=$5c;
 
 { COMIENZO DE LAS VIDAS }
        REPEAT
-             delay (700);
+             wait_ms(700);
 
 { CICLO DEL JUEGO }
-                        sound (100);
-                        delay (3);
-                        nosound;
+             sound (100);
+             wait_ms(3);
+             nosound;
 
-                 main_loop2;
+             main_loop2;
 
              nosound;
 
@@ -695,7 +799,7 @@ open_records (records);
                                     setzeros;
                                     load_screen ('gameo.vga',act);
                                     fadein (col2);
-                                    delay (2500);
+                                    wait_ms(2500);
                                     fade_to_black (col2);
                               end;
 
@@ -703,7 +807,6 @@ open_records (records);
                               loadcol ('dpac2.col',presen_col);
                               setzeros;
                               load_screen ('salida.vga',act);
-                              {start_music;}
                               fadein (presen_col);
                               conta_intercambio := 0;
                               W_pantalla := false;
@@ -729,106 +832,105 @@ end;
 
 
 begin;
-clrscr;
-open_records(records);
+	ticks := getAverageTicks(5);
+	ticks1Ms := ticks div 60; { I supposed it's 1 ms aprox }
+
+    get_delay_params;
+
+{        ms_retrace := 20;
+        ms_beep := 1;}
+
+	clrscr;
+	open_records(records);
+
+
+	salida := false;
+
+	getmem(Pantalla,sizeof(panta));
+
+	{ LEE LOS SPRITES DEL DISCO }
+
+	pausa2 := 0;
+	retraso_fade := pausa2 * 20;
+	pausa := pausa2 * 1900;
+
+
+	cheat_mode := false;
+	if paramstr(1) = 'cheat' then cheat_mode := true;
+
+	nivini := 1;
+	if paramstr(1) = 'test' then
+        begin
+	  write ('Nivel inicial:');
+	  readln (nivini);
+	end;
+
+	ReadSprites ('PACMAN.DAT');
+	compile;
+
+	conta_sonido := 0;
+	sonido_pastilla := false;
+	setgraph;
+	DirectVideo := False;
+
+        loadcol ('dpac2.col',presen_col);
+	load_screen ('salida.vga',act);
+	fadein (presen_col);
+
+	c_principal := 0;
+	conta_intercambio := 0;
+	W_pantalla := false;
+
+	repeat
+
+	WaitRetrace;
+	inc (conta_intercambio);
+
+
+	for retraso := 1 to pausa do;
+
+
+	if presionada [59] then begin;
+								  Fade_to_black (presen_col);
+								  { CANTIDAD DE VIDAS }
+								  vidas := 5;
+								  vidas2 := 0;
+								  nivel := nivini;
+								  players2;
+							end;
+
+
+	if presionada [60] then begin;
+								  Fade_to_black (presen_col);
+								  { CANTIDAD DE VIDAS }
+								  competitive := false;
+								  vidas := 5;
+								  vidas2 := 5;
+								  nivel := nivini;
+								  players2;
+							end;
+
+	if presionada [61] then begin;
+								  Fade_to_black (presen_col);
+								  { CANTIDAD DE VIDAS }
+								  competitive := true;
+								  vidas := 5;
+								  vidas2 := 5;
+								  nivel := nivini;
+								  players2;
+							end;
 
 
 
+	until presionada[1];
+	Fade_to_black (presen_col);
 
 
+	{ LIBERA MEMORIA DE LA VARIABLE PANTALLA };
 
-salida := false;
-
-getmem(Pantalla,sizeof(panta));
-
-{ LEE LOS SPRITES DEL DISCO }
-
-pausa2 := getvel;
-retraso_fade := pausa2 * 20;
-pausa := pausa2 * 1900;
-
-
-
-cheat_mode := false;
-if paramstr(1) = 'cheat' then
-                              cheat_mode := true;
-
-nivini := 1;
-if paramstr(1) = 'test' then
-                         begin
-                              write ('Nivel inicial:');
-                              readln (nivini);
-                         end;
-
-retraso_pii := 6;
-
-ReadSprites ('PACMAN.DAT');
-compile;
-
-conta_sonido := 0;
-sonido_pastilla := false;
-setgraph;
-DirectVideo := False;
-
-      loadcol ('dpac2.col',presen_col);
-      load_screen ('salida.vga',act);
-
-      fadein (presen_col);
-
-      c_principal := 0;
-      conta_intercambio := 0;
-      W_pantalla := false;
-
-repeat
-
-WaitRetrace;
-inc (conta_intercambio);
-
-
-for retraso := 1 to pausa do;
-
-
-if presionada [59] then begin;
-                              Fade_to_black (presen_col);
-                              { CANTIDAD DE VIDAS }
-                              vidas := 5;
-                              vidas2 := 0;
-                              nivel := nivini;
-                              players2;
-                        end;
-
-
-if presionada [60] then begin;
-                              Fade_to_black (presen_col);
-                              { CANTIDAD DE VIDAS }
-                              competitive := false;
-                              vidas := 5;
-                              vidas2 := 5;
-                              nivel := nivini;
-                              players2;
-                        end;
-
-if presionada [61] then begin;
-                              Fade_to_black (presen_col);
-                              { CANTIDAD DE VIDAS }
-                              competitive := true;
-                              vidas := 5;
-                              vidas2 := 5;
-                              nivel := nivini;
-                              players2;
-                        end;
-
-
-
-until presionada[1];
-Fade_to_black (presen_col);
-
-
-{ LIBERA MEMORIA DE LA VARIABLE PANTALLA };
-
-freemem(Pantalla,sizeof(panta));
-textmode (3);
-writeln ('Ahhh!!! DOS Again!...');
+	freemem(Pantalla,sizeof(panta));
+	textmode (3);
+	writeln ('Ahhh!!! DOS Again!...');
 
 end.
 
